@@ -49,11 +49,9 @@ func (a *defaultAdapter) Text(res *Response) ([]byte, error) {
 	}
 	return text, nil
 }
-func (a *defaultAdapter) Parse(res *Response) (*Record, error) {
-	err := errorString{"Parser not implemented for adapter"}
-	r := Record{}
 
-	return &r, &err
+func (a *defaultAdapter) Parse(res *Response) (r *Record, err error) {
+	return parse(res)
 }
 
 // adapters holds a global list of bound Adapters.

@@ -15,6 +15,8 @@ func (a *verisignAdapter) Prepare(req *Request) error {
 	return nil
 }
 
+// Parse will only be called if there is no whois server specified
+// It's a fallback to get "some" information
 func (a *verisignAdapter) Parse(res *Response) (r *Record, err error) {
 	//err := errorString{}
 	str := res.String()

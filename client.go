@@ -96,6 +96,26 @@ func (c *Client) fetchWhois(req *Request) (*Response, error) {
 		return nil, &FetchError{err, req.Host}
 	}
 	res.DetectContentType("")
+
+	// We get the domain again, just in case we ran the earlier query with something like "domain google.com"
+	domain := regex(`(?U)Domain Name:([^\r\n]*)?[\n\r]+`, res.String())[0]
+	whois := regex(`(?Ui)Whois Server:([^\r\n]*)?[\n\r]+`, res.String())[0]
+	//fmt.Printf("domain: %s, whois: %s, host: %s\n", domain, whois, req.Host)
+
+	// Recursion
+	// TODO make things a bit smarted here, there is a risk to go in a recursion loop
+	// Logic is simple, if the whois server returned by the request is different
+	// from the whois server we queried AND this whois server is not null, we recurse.
+	// WARNING - Most of the time this will send the request to the defaultAdapter though
+	if whois != "" && req.Host != whois {
+		recurseReq := &Request{Query: domain, Host: whois}
+		recurseReq.Prepare()
+
+		recurseRes, _ := DefaultClient.Fetch(recurseReq)
+
+		return recurseRes, nil
+	}
+
 	return res, nil
 }
 
