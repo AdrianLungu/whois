@@ -4,20 +4,15 @@ package whois
 
 // Contact describes a domain contact (owner, admin, tech...)
 type Contact struct {
-	ID            string
-	Type          string
-	Name          string
-	Organization  string
-	Street        []string
-	City          string
-	StateProvince string
-	PostalCode    string
-	Country       string
-	Phone         string
-	PhoneExt      string
-	Fax           string
-	FaxExt        string
-	Email         string
+	ID           string
+	Role         string
+	Name         string
+	Organization string
+	Address      []string
+	Country      string
+	Phone        string
+	Fax          string
+	Email        string
 }
 
 // Record contains the parsed domain information
