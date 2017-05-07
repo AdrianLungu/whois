@@ -44,6 +44,13 @@ func (a *nrAdapter) Text(res *Response) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
+func (a *nrAdapter) Parse(res *Response) (*Record, error) {
+	err := errorString{"Parser not implemented for adapter"}
+	r := Record{}
+
+	return &r, &err
+}
+
 func init() {
 	BindAdapter(
 		&nrAdapter{},

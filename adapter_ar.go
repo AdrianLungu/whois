@@ -31,6 +31,13 @@ func (a *arAdapter) Prepare(req *Request) error {
 	return nil
 }
 
+func (a *arAdapter) Parse(res *Response) (*Record, error) {
+	err := errorString{"Parser not implemented for adapter"}
+	r := Record{}
+
+	return &r, &err
+}
+
 func init() {
 	BindAdapter(
 		&arAdapter{},

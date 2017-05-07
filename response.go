@@ -218,3 +218,8 @@ func ReadMIMEFile(path string) (*Response, error) {
 	defer f.Close()
 	return ReadMIME(f)
 }
+
+// Parse Need to document
+func (res *Response) Parse() (*Record, error) {
+	return res.Adapter().Parse(res)
+}

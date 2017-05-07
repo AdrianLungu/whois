@@ -14,6 +14,8 @@ type Adapter interface {
 	// Text returns the UTF-8 text of the Response body, stripping off any
 	// excess data, (e.g. HTML) from a web response.
 	Text(*Response) ([]byte, error)
+
+	Parse(*Response) (*Record, error)
 }
 
 // DefaultAdapter is the default Adapter for most whois servers.
@@ -46,6 +48,12 @@ func (a *defaultAdapter) Text(res *Response) ([]byte, error) {
 		return nil, err
 	}
 	return text, nil
+}
+func (a *defaultAdapter) Parse(res *Response) (*Record, error) {
+	err := errorString{"Parser not implemented for adapter"}
+	r := Record{}
+
+	return &r, &err
 }
 
 // adapters holds a global list of bound Adapters.
